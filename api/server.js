@@ -17,6 +17,7 @@ const cors = require("cors");
 const server = express();
 const session = require('express-session');
 const Store = require('connect-session-knex')(session); //persist in the database !
+const userRouter = require('./users/users-router');
 
 //LOGIC section
 server.use(helmet());
@@ -47,6 +48,7 @@ server.use(session({
 }));
 
 //router wiill go here 
+server.use('/api/users',userRouter);
 
 server.get("/", (req, res) => {
   res.json({ api: "up" });
