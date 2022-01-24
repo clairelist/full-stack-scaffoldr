@@ -1,10 +1,9 @@
+//global data needed
+const User = require('../users/users-model'); //--> used for checky functions, below
 /*
   If the user does not have a session saved in the server
-
   status 401
-  {
-    "message": "You shall not pass!"
-  }
+  {"message": "You shall not pass!"}
 */
 function restricted(req,res,next) {
   if(req.session.user){ //checks session, similar to magic line in auth router ! EZ
@@ -16,14 +15,20 @@ function restricted(req,res,next) {
 
 /*
   If the username in req.body already exists in the database
-
   status 422
-  {
-    "message": "Username taken"
-  }
+  {"message": "Username taken"}
 */
-function checkUsernameFree() {
-
+//will require the User object from model !
+//check User.find(username.req.body);; if tru, error case (GED above).
+async function checkUsernameFree(req,res,next) {
+  const username = await User.find(req.body.username)
+    .then(()=>{ //must be an anon function here so res passes correctly from invoke of functionn later !
+      if (username===req.body.username){
+        res.status(422).json({message: 'Username taken'});
+      } else {
+        next();
+      }
+    })
 }
 
 /*
