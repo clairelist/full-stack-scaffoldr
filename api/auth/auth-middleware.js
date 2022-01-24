@@ -39,8 +39,15 @@ async function checkUsernameFree(req,res,next) {
     "message": "Invalid credentials"
   }
 */
-function checkUsernameExists() {
-
+async function checkUsernameExists(req,res,next) {
+  const username = await User.find(req.body.username)
+    .then(()=>{
+      if(!username){
+        res.status(401).json({message:'Invalid credentials'});
+      } else {
+        next();
+      }
+    })
 }
 
 /*
@@ -51,8 +58,13 @@ function checkUsernameExists() {
     "message": "Password must be longer than 3 chars"
   }
 */
-function checkPasswordLength() {
-
+function checkPasswordLength(req,res,next) {
+  const passlength = req.body.password;
+  if(passlength.length < 3 || !passlength) {
+    res.status(422).json({message: 'Password must be longer than 3 chars'});
+  } else {
+    next();
+  }
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules

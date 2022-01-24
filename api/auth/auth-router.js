@@ -1,6 +1,9 @@
 // Require `checkUsernameFree`, `checkUsernameExists` and `checkPasswordLength`
 // middleware functions from `auth-middleware.js`. You will need them here!
-const {checkUsernameFree} = require('./auth-middleware');
+const {
+  checkUsernameFree,
+  checkPasswordLength,
+} = require('./auth-middleware');
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const User = require("../users/users-model");
@@ -21,7 +24,7 @@ const User = require("../users/users-model");
   }
  */
 //TODO when I get back from braek: build and include here password checky middleware!
-router.post('/register',checkUsernameFree, async (req,res,next)=>{
+router.post('/register',checkUsernameFree, checkPasswordLength, async (req,res,next)=>{
   try {
     //pull creds from req body
     const {username, password} = req.body;
