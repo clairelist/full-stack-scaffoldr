@@ -16,10 +16,10 @@ Your assignment page on Canvas should contain instructions for submitting this p
 
 Write the following user access functions inside `api/users/users-model.js`:
 
-- [ ] `find`
-- [ ] `findBy`
-- [ ] `findById`
-- [ ] `add`
+- [X] `find`
+- [X] `findBy`
+- [X] `findById`
+- [X] `add`
 
 #### 2B - Middleware Functions
 
