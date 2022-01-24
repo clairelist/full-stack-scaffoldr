@@ -21,14 +21,16 @@ function restricted(req,res,next) {
 //will require the User object from model !
 //check User.find(username.req.body);; if tru, error case (GED above).
 async function checkUsernameFree(req,res,next) {
-  const username = await User.find(req.body.username)
-    .then(()=>{ //must be an anon function here so res passes correctly from invoke of functionn later !
-      if (username===req.body.username){
-        res.status(422).json({message: 'Username taken'});
-      } else {
-        next();
-      }
-    })
+  try {
+    const username = await User.findBy(req.body.username);
+    if (username){
+      res.status(422).json({message: 'Username taken'});
+    } else {
+      next();
+    }
+  }catch (err) {
+    res.status(500).json({message: 'BAD REQUEST MADE! ', error: err});
+  }
 }
 
 /*
@@ -40,14 +42,16 @@ async function checkUsernameFree(req,res,next) {
   }
 */
 async function checkUsernameExists(req,res,next) {
-  const username = await User.find(req.body.username)
-    .then(()=>{
-      if(!username){
-        res.status(401).json({message:'Invalid credentials'});
-      } else {
-        next();
-      }
-    })
+  try{
+    const username = await User.findBy(req.body.username);
+    if(!username){
+      res.status(401).json({message:'Invalid credentials'})
+    } else {
+      next();
+    }
+  } catch(err){
+    res.status(500).json({message: 'BAD REQUEST MADE! ', error: err});
+  }
 }
 
 /*

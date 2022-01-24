@@ -38,7 +38,7 @@ router.post('/register',checkUsernameFree, checkPasswordLength, async (req,res,n
     const inserted = await User.add(newUser);
 
     //then, we respond
-    res.status(200).json(newUser,{message:` Welcome ${inserted}`})
+    res.status(200).json(inserted)
   } catch(err) {
     next(err)
   }
