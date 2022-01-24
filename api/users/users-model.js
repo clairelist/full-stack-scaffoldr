@@ -4,7 +4,7 @@ const lego = require('../../data/db-config');
   resolves to an ARRAY with all users, each user having { user_id, username }
  */
 function find() {
-  return lego('users').select('id', 'username');
+  return lego('users').select('user_id', 'username');
 }
 
 /**
@@ -19,7 +19,7 @@ function findBy(filter) {
  */
 function findById(user_id) {
   return lego('users')
-    .where({ user_id })
+    .where('user_id', user_id )
     .first();
 }
 

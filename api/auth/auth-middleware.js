@@ -22,11 +22,11 @@ function restricted(req,res,next) {
 //check User.find(username.req.body);; if tru, error case (GED above).
 async function checkUsernameFree(req,res,next) {
   try {
-    const username = await User.findBy(req.body.username);
-    if (username){
-      res.status(422).json({message: 'Username taken'});
-    } else {
+    const username = await User.findBy({ username: req.body.username });
+    if (!username.length){ //if if this ^ array length is 0, we are happy and can go on. Pass the 'happy' path first !
       next();
+    } else {
+      res.status(422).json({message: 'Username taken'});
     }
   }catch (err) {
     res.status(500).json({message: 'BAD REQUEST MADE! ', error: err});
@@ -41,13 +41,14 @@ async function checkUsernameFree(req,res,next) {
     "message": "Invalid credentials"
   }
 */
+//basically the opposite logic of the above username free func !
 async function checkUsernameExists(req,res,next) {
   try{
-    const username = await User.findBy(req.body.username);
-    if(!username){
-      res.status(401).json({message:'Invalid credentials'})
-    } else {
+    const username = await User.findBy({username: req.body.username});
+    if(username.length){
       next();
+    } else {
+      res.status(401).json({message:'Invalid credentials'})
     }
   } catch(err){
     res.status(500).json({message: 'BAD REQUEST MADE! ', error: err});
@@ -63,9 +64,8 @@ async function checkUsernameExists(req,res,next) {
   }
 */
 function checkPasswordLength(req,res,next) {
-  const passlength = req.body.password;
-  if(passlength.length < 3 || !passlength) {
-    res.status(422).json({message: 'Password must be longer than 3 chars'});
+  if(!req.body.password || req.body.password.length < 3){
+    res.status(422).json({message: 'Password must be longer than 3 chars'})
   } else {
     next();
   }

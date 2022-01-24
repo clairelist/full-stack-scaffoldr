@@ -18,6 +18,7 @@ const server = express();
 const session = require('express-session');
 const Store = require('connect-session-knex')(session); //persist in the database !
 const userRouter = require('./users/users-router');
+const authRouter = require('./auth/auth-router');
 
 //LOGIC section
 server.use(helmet());
@@ -28,7 +29,7 @@ server.use(cors());
 //server.use(express.static(path.join(__dirname, '../client'))); // --> this is used for when we have a client app built !!
 
 server.use(session({
-  name: 'monkey3',
+  name: 'chocolatechip',
   secret: process.env.SECRET || 'keep it secret.',
   cookie: {
     maxAge: 1000*60*60,
@@ -49,6 +50,7 @@ server.use(session({
 
 //router wiill go here 
 server.use('/api/users',userRouter);
+server.use('/api/auth',authRouter);
 
 server.get("/", (req, res) => {
   res.json({ api: "up" });
