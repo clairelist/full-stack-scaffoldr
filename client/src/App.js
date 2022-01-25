@@ -13,8 +13,8 @@ function App() {
     <h2>Hello from app !</h2>
     <Link to='/register'>Click ME to sign UP !</Link>
     <Link to ='/logout'>Click ME to log OUT !</Link>
-
-    <Route exact path='/'>
+    
+    <Route exact path='/login'>
       <Login />
     </Route>
     <Route path='/register'>

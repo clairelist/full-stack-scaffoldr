@@ -9,7 +9,7 @@ const Logout = () => {
         axiosWithAuth()
             .post('/auth/logout')
             .then(resp => {
-                localStorage.removeItem('token');
+                localStorage.removeItem('cookie');
                 push('/login');
             });
     }, []);  //eslint-disable-line
