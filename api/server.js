@@ -13,8 +13,8 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-//const path = require('path'); //--> also needed for client app to work !
-//server.use(express.static(path.join(__dirname, '../client'))); // --> this is used for when we have a client app built !!
+const path = require('path'); //--> also needed for client app to work !
+server.use(express.static(path.join(__dirname, '../client'))); // --> this is used for when we have a client app built !!
 
 server.use(session({
   name: 'chocolatechip',
