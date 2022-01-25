@@ -1,18 +1,29 @@
 import React from 'react';
 import axios from 'axios';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+// import { useHistory } from 'react-router-dom';
 
 class Login extends React.Component{
     //DATA SECTION !
-    state = {
-        credentials: {
-          username: '',
-          password: '',
-          error: 'USERNAME & PASSWORD MUST MATCH THE REGISTER'
-        }
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
       };
-
+    constructor(props){
+        super(props);
+        this.state = {
+            credentials: {
+              username: '',
+              password: '',
+              error: 'USERNAME & PASSWORD MUST MATCH THE REGISTER'
+            }
+          };
+    }
+    
+   
     //LOGIC section!
       handleChange = e => {
+        
         this.setState({
           credentials: {
             ...this.state.credentials,
@@ -23,11 +34,13 @@ class Login extends React.Component{
     
       login = event => {
         event.preventDefault();
+        const { cookies } = this.props;
+
         axios.post('http://localhost:9000/api/auth/login', this.state.credentials)
           .then(res=> {
             const { password, username } = res.data;
-            localStorage.setItem("password", password);
-            localStorage.setItem("username", username);
+            cookies.set("password", password);
+            cookies.set("username", username); //jhere's hopeing this works lol!
             this.props.history.push('/view');
           })
           .catch(err => {
@@ -61,4 +74,4 @@ class Login extends React.Component{
     }
 }
 
-export default Login;
+export default withCookies(Login);
