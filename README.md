@@ -1,4 +1,4 @@
-This is a scaffold for a full CRUD API, using Node.js and Express, as well as a connected front end basic React app for handling user registration, login, and logout.
+This is a scaffold for a fullstack app, using Node.js and Express for the backend, as well as a connected front end basic React app for handling user registration, login, and logout.
 
 --> In `api/` you will find:
 - server.js, where the server herself lives!
@@ -23,4 +23,5 @@ This is a scaffold for a full CRUD API, using Node.js and Express, as well as a 
 - IMPORTANT: AS OF 2/13/22 THE CLIENT SIDE IS UNDERGOING CHANGES AND WILL UPDATE THIS README WHEN SAID FUNCTIONALITY IS WORKING.
 
 --> [VERSION-NOTES]
-- as seen on TV in package.json, 
+- as seen o̶n̶ T̶V̶  in `package.json`, an older version of sqlite3 is being used (ver 5.0.2), due to some breaking changes on Windows (Claire will have to play with the new version, so hopefully this part will be deprecated and excised soon !)
+- further, in `client/package.json`, react-router-dom version 5.3.0 is still in use, again because Claire has not had time to play with the most recent version. Again, when she has had time to update her knowledge base this comment will be deprecated :-) 
